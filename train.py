@@ -24,6 +24,7 @@ if __name__ == '__main__':
     parser.add_argument('--alpha', default= 1.0, type= float)
     parser.add_argument('--droppout', default= 0.001, type= float)
     parser.add_argument('--Mobilenetv1-folder', default= 'MobilenetV1', type= str)
+    parser.add_argument('--label-smoothing', default= 0.1, type = float)
 
     try:
         args = parser.parse_args()
@@ -50,13 +51,13 @@ if __name__ == '__main__':
     MobilenetV1 = Mobilenet_V1(classes= args.classes, alpha= args.alpha, rho= args.alpha, droppout= args.droppout, img_size= (args.image_size, args.image_size)).build()
 
     # Set up loss function
-    loss = CategoricalCrossentropy()
+    loss = CategoricalCrossentropy(label_smoothing= args.label_smoothing)
 
     # Optimizer Definition
-    adam = Adam(learning_rate= args.learning_rate)
+    optimizer = RMSprop(learning_rate= args.learning_rate)
 
     # Complie optimizer and loss function into model
-    MobilenetV1.compile(optimizer= adam, loss= loss, metrics= ['acc'])
+    MobilenetV1.compile(optimizer= optimizer, loss= loss, metrics= ['acc'])
 
     # Training model 
     print('-------------Training Mobilenet_V1------------')
