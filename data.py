@@ -12,6 +12,7 @@ class DataLoader():
         self.batch_size = batch_size
         self.shuffle = shuffle
         self.data_folder = Data_folder
+        self.val_data_folder = Validation_Data_folder
         self.img_size = image_size
 
     def __gen_new_img(self,data_folder :str, augment :bool):
