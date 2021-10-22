@@ -47,7 +47,7 @@ if __name__ == '__main__':
     train_data, val_data = datasets.build_dataset()
 
     # Initializing models
-    MobilenetV1 = Mobilenet_V1(classes= args.classes, alpha= args.alpha, rho= args.alpha, droppout= args.droppout)
+    MobilenetV1 = Mobilenet_V1(classes= args.classes, alpha= args.alpha, rho= args.alpha, droppout= args.droppout, img_size= (args.image_size, args.image_size)).build()
 
     # Set up loss function
     loss = CategoricalCrossentropy()
