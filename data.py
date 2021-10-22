@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow as tf 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 class DataLoader():
@@ -21,12 +21,9 @@ class DataLoader():
                 rescale= 1. /255,
                 rotation_range= 20, 
                 width_shift_range= 0.2,
-                height_shift_range= 0.2, 
-                shear_range= 0.2 , 
                 zoom_range= 0.2,
                 horizontal_flip= True,
-                vertical_flip= True,
-                fill_mode= 'wrap'
+                fill_mode= 'nearest'
             )
         else:
             data_gen = ImageDataGenerator(rescale= 1. /255)
@@ -36,7 +33,8 @@ class DataLoader():
             target_size= self.img_size,
             batch_size= self.batch_size,
             shuffle= self.shuffle,
-            class_mode= 'categorical'
+            class_mode= 'categorical',
+            seed= self.seed
         )
         return data
     
