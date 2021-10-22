@@ -61,5 +61,5 @@ if __name__ == '__main__':
     # Training model 
     print('-------------Training Mobilenet_V1------------')
     MobilenetV1.fit(train_data, validation_data= val_data, epochs= args.epochs, verbose= 1)
-
+    MobilenetV1.save(args.Mobilenetv1_folder)
 
