@@ -19,7 +19,7 @@ if __name__ == '__main__':
     parser.add_argument('--shuffle', default= True, type= bool)
     parser.add_argument('--augmented', default= True, type= bool)
     parser.add_argument('--seed', default= 2020, type= int)
-    parser.add_argument('--image-sie', default= 224, type= int)
+    parser.add_argument('--image-size', default= 224, type= int)
     parser.add_argument('--rho', default= 1.0, type= float)
     parser.add_argument('--alpha', default= 1.0, type= float)
     parser.add_argument('--droppout', default= 0.001, type= float)
