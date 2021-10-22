@@ -2,7 +2,7 @@ from data import DataLoader
 from model import *
 from argparse import ArgumentParser
 from tensorflow.keras.optimizers import *
-from tensorflow.keras.losses import SparseCategoricalCrossentropy
+from tensorflow.keras.losses import CategoricalCrossentropy
 import tensorflow as tf
 import sys
 tf.config.experimental_run_functions_eagerly(True)
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     MobilenetV1 = Mobilenet_V1(classes= args.classes, alpha= args.alpha, rho= args.alpha, droppout= args.droppout)
 
     # Set up loss function
-    loss = SparseCategoricalCrossentropy()
+    loss = CategoricalCrossentropy()
 
     # Optimizer Definition
     adam = Adam(learning_rate= args.learning_rate)
