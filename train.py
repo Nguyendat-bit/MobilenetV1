@@ -16,7 +16,7 @@ if __name__ == '__main__':
     parser.add_argument('--valid-folder', type= str)
     parser.add_argument('--epochs', default= 10, type= int)
     parser.add_argument('--classes', default= 2, type= int)
-    parser.add_argument('--learning-rate', default= 0.001, type= float)
+    parser.add_argument('--lr', default= 0.001, type= float)
     parser.add_argument('--shuffle', default= True, type= bool)
     parser.add_argument('--augmented', default= True, type= bool)
     parser.add_argument('--seed', default= 2020, type= int)
@@ -26,6 +26,7 @@ if __name__ == '__main__':
     parser.add_argument('--droppout', default= 0.001, type= float)
     parser.add_argument('--Mobilenetv1-folder', default= 'MobilenetV1', type= str)
     parser.add_argument('--label-smoothing', default= 0.1, type = float)
+    parser.add_argument('--optimizer', default= '')
 
     try:
         args = parser.parse_args()
@@ -43,6 +44,7 @@ if __name__ == '__main__':
     for i, arg in enumerate(vars(args)):
         print('{}.{}: {}'.format(i, arg, vars(args)[arg]))
     
+
     # Load Data
     print("-------------LOADING DATA------------")
     datasets = DataLoader(args.train_folder, args.valid_folder, augment= args.augmented, seed= args.seed, batch_size= args.batch_size, shuffle= args.shuffle, image_size= (args.image_size, args.image_size))
@@ -55,11 +57,24 @@ if __name__ == '__main__':
     loss = CategoricalCrossentropy(label_smoothing= args.label_smoothing)
 
     # Optimizer Definition
-    optimizer = Adagrad(learning_rate= args.learning_rate)
+    if args.optimizer == 'adam':
+        optimizer = Adam(learning_rate=args.lr)
+    elif args.optimizer == 'sgd':
+        optimizer = SGD(learning_rate=args.lr)
+    elif args.optimizer == 'rmsprop':
+        optimizer = RMSprop(learning_rate=args.lr)
+    elif args.optimizer == 'adadelta':
+        optimizer = Adadelta(learning_rate=args.lr)
+    elif args.optimizer == 'adamax':
+        optimizer = Adamax(learning_rate=args.lr)
+    elif args.optimizer == 'adagrad':
+        optimizer = Adagrad(learning_rate= args.lr)
+    else:
+        raise 'Invalid optimizer. Valid option: adam, sgd, rmsprop, adadelta, adamax, adagrad'
 
     # Callback
     checkpoint = callbacks.ModelCheckpoint(args.Mobilenetv1_folder, monitor= 'val_acc', save_best_only=  True, verbose = 1)
-    lr_R = callbacks.ReduceLROnPlateau(monitor= 'acc', patience= 6, verbose= 1 , factor= 0.5, min_lr= 0.00001)
+    lr_R = callbacks.ReduceLROnPlateau(monitor= 'acc', patience= 4, verbose= 1 , factor= 0.5, min_lr= 0.00001)
 
     # Complie optimizer and loss function into model
     MobilenetV1.compile(optimizer= optimizer, loss= loss, metrics= ['acc'])
