@@ -54,7 +54,7 @@ if __name__ == '__main__':
     loss = CategoricalCrossentropy(label_smoothing= args.label_smoothing)
 
     # Optimizer Definition
-    optimizer = RMSprop(learning_rate= args.learning_rate)
+    optimizer = Adagrad(learning_rate= args.learning_rate)
 
     # Complie optimizer and loss function into model
     MobilenetV1.compile(optimizer= optimizer, loss= loss, metrics= ['acc'])
