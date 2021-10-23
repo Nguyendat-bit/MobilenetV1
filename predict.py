@@ -1,4 +1,3 @@
-import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras import preprocessing
 import json 
@@ -8,7 +7,6 @@ import sys
 
 from tensorflow.python.ops.gen_math_ops import mod
 
-from train import MobilenetV1
 
 if __name__ == '__main__':
     parser = ArgumentParser()
