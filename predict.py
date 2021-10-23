@@ -4,8 +4,10 @@ import json
 import tensorflow as tf 
 from argparse import ArgumentParser
 import sys
+import tensorflow.compat.v1.keras.backend as K
+import tensorflow as tf
+tf.compat.v1.disable_eager_execution()
 
-from tensorflow.python.ops.gen_math_ops import mod
 
 
 if __name__ == '__main__':
@@ -36,7 +38,7 @@ if __name__ == '__main__':
     model = load_model(args.MobilenetV1_folder)
 
     # Load label 
-    with open('label.json', encoding= 'utf-8', mode = 'r') as f:
+    with open('label.json') as f:
         class_indices = json.load(f)
     indices_class = dict((i,j) for i,j in class_indices.items())
 
