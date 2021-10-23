@@ -1,5 +1,6 @@
 import tensorflow as tf 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import json
 
 class DataLoader():
     def __init__(self, Data_folder , Validation_Data_folder , augment:bool = True, seed:int = None, batch_size:int = 64, shuffle:bool = True, image_size = (224,224)):
@@ -42,4 +43,9 @@ class DataLoader():
         return data
     
     def build_dataset(self):
-        return self.__gen_new_img(self.data_folder,augment= self.augement), self.__gen_new_img(self.val_data_folder, augment= False)
+        data =  self.__gen_new_img(self.data_folder,augment= self.augement), self.__gen_new_img(self.val_data_folder, augment= False)
+        # save label 
+        with open('label.json', 'w', encoding= 'utf-8') as f:
+            json.dump(data[0].class_indices, f)
+
+        return data
