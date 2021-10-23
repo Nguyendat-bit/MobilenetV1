@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 from tensorflow.keras.optimizers import *
 from tensorflow.keras.losses import CategoricalCrossentropy
 import tensorflow as tf
+
 import sys
 tf.config.experimental_run_functions_eagerly(True)
 
@@ -54,13 +55,16 @@ if __name__ == '__main__':
     loss = CategoricalCrossentropy(label_smoothing= args.label_smoothing)
 
     # Optimizer Definition
-    optimizer = Adagrad(learning_rate= args.learning_rate)
+    optimizer = RMSprop(learning_rate= args.learning_rate)
+
+    # Callback
+    callback = callbacks.ModelCheckpoint(args.Mobilenetv1_folder, monitor= 'val_acc', save_best_only=  True, verbose = 1)
 
     # Complie optimizer and loss function into model
     MobilenetV1.compile(optimizer= optimizer, loss= loss, metrics= ['acc'])
 
     # Training model 
     print('-------------Training Mobilenet_V1------------')
-    MobilenetV1.fit(train_data, validation_data= val_data, epochs= args.epochs, verbose= 1)
-    MobilenetV1.save(args.Mobilenetv1_folder)
+    MobilenetV1.fit(train_data, validation_data= val_data, epochs= args.epochs, verbose= 1, callbacks= [callback])
+
 
