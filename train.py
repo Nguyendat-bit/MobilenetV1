@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
     # Callback
     checkpoint = callbacks.ModelCheckpoint(args.Mobilenetv1_folder, monitor= 'val_acc', save_best_only=  True, verbose = 1)
-    lr_R = callbacks.ReduceLROnPlateau(monitor= 'val_acc', patience= 5, verbose= 1 , factor= 0.5, min_lr= 0.00001)
+    lr_R = callbacks.ReduceLROnPlateau(monitor= 'acc', patience= 6, verbose= 1 , factor= 0.5, min_lr= 0.00001)
 
     # Complie optimizer and loss function into model
     MobilenetV1.compile(optimizer= optimizer, loss= loss, metrics= ['acc'])
