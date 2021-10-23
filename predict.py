@@ -5,6 +5,7 @@ import tensorflow as tf
 from argparse import ArgumentParser
 import sys
 import tensorflow.compat.v1.keras.backend as K
+import numpy as np
 import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
@@ -47,6 +48,6 @@ if __name__ == '__main__':
     img = tf.expand_dims(img, axis= 0) # (batch, row, col, chanel)
 
     result = model(img)
-    result = tf.argmax(result)
+    result = np.argmax(result)
     print('---------------------Prediction Result: -------------------')
     print('This image is {}'.format(indices_class[result]))
