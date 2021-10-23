@@ -55,16 +55,17 @@ if __name__ == '__main__':
     loss = CategoricalCrossentropy(label_smoothing= args.label_smoothing)
 
     # Optimizer Definition
-    optimizer = RMSprop(learning_rate= args.learning_rate)
+    optimizer = Adagrad(learning_rate= args.learning_rate)
 
     # Callback
-    callback = callbacks.ModelCheckpoint(args.Mobilenetv1_folder, monitor= 'val_acc', save_best_only=  True, verbose = 1)
+    checkpoint = callbacks.ModelCheckpoint(args.Mobilenetv1_folder, monitor= 'val_acc', save_best_only=  True, verbose = 1)
+    lr_R = callbacks.ReduceLROnPlateau(monitor= 'val_acc', patience= 5, verbose= 1 , factor= 0.5, min_lr= 0.00001)
 
     # Complie optimizer and loss function into model
     MobilenetV1.compile(optimizer= optimizer, loss= loss, metrics= ['acc'])
 
     # Training model 
     print('-------------Training Mobilenet_V1------------')
-    MobilenetV1.fit(train_data, validation_data= val_data, epochs= args.epochs, verbose= 1, callbacks= [callback])
+    MobilenetV1.fit(train_data, validation_data= val_data, epochs= args.epochs, verbose= 1, callbacks= [checkpoint, lr_R])
 
 
