@@ -8,6 +8,7 @@ import tensorflow as tf
 import sys
 tf.config.experimental_run_functions_eagerly(True)
 
+
 if __name__ == '__main__':
     parser = ArgumentParser()
 
@@ -26,7 +27,7 @@ if __name__ == '__main__':
     parser.add_argument('--droppout', default= 0.001, type= float)
     parser.add_argument('--Mobilenetv1-folder', default= 'MobilenetV1', type= str)
     parser.add_argument('--label-smoothing', default= 0.1, type = float)
-    parser.add_argument('--optimizer', default= '')
+    parser.add_argument('--optimizer', default= 'adagrad', type= str)
 
     try:
         args = parser.parse_args()
