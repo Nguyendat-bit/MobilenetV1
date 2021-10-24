@@ -5,8 +5,7 @@ import tensorflow as tf
 from argparse import ArgumentParser
 import sys
 import numpy as np
-import tensorflow as tf
-tf.compat.v1.disable_eager_execution()
+
 
 
 
