@@ -14,7 +14,7 @@ if __name__ == '__main__':
     
     parser.add_argument('--MobilenetV1-folder', default= 'MobilenetV1',type= str)
     parser.add_argument('--test-file', type= str, required= True)
-    parser.add_argument('--image-size', default= 224, type= int)
+    parser.add_argument('--image-size', default= 150, type= int)
     parser.add_argument('--rho',default= 1.0, type= float)
 
     try:
