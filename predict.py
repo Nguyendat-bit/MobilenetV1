@@ -39,7 +39,7 @@ if __name__ == '__main__':
     # Load label 
     with open('label.json') as f:
         class_indices = json.load(f)
-    indices_class = dict((i,j) for i,j in class_indices.items())
+    indices_class = dict((j,i) for i,j in class_indices.items())
 
     img = preprocessing.image.load_img(path= args.test_file, target_size= (args.image_size, args.image_size))
     img = preprocessing.image.img_to_array(img) / 255.
