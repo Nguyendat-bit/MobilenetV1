@@ -73,9 +73,9 @@ train/
 ...roses/
 ......roses0.jpg
 ......roses1.jpg
-...sunfloers/
-......sunfloers0.jpg
-......sunfloers1.jpg
+...sunflowers/
+......sunflowers0.jpg
+......sunflowers1.jpg
 ...tulips/
 ......tulips0.jpg
 ......tulips1.jpg
@@ -92,9 +92,9 @@ validation/
 ...roses/
 ......roses2000.jpg
 ......roses2001.jpg
-...sunfloers/
-......sunfloers2000.jpg
-......sunfloers2001.jpg
+...sunflowers/
+......sunflowers2000.jpg
+......sunflowers2001.jpg
 ...tulips/
 ......tulips2000.jpg
 ......tulips2001.jpg
