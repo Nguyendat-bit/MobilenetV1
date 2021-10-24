@@ -46,7 +46,7 @@ if __name__ == '__main__':
     img = preprocessing.image.img_to_array(img) / 255.
     img = tf.expand_dims(img, axis= 0) # (batch, row, col, chanel)
 
-    result = np.array(model(img))
-    result = np.argmax(result)
+    result = model(img)
+    result = np.argmax(result.numpy())
     print('---------------------Prediction Result: -------------------')
     print('This image is {}'.format(indices_class[result]))
