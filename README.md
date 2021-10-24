@@ -18,7 +18,7 @@ We see that the model has 30 layers with following characteristics:
 
 ### Depthwise Separable Concolution
 <p>The improvement point of the model is to use a convolution method called <code>Depthwise Separable Convolution</code> to reduce the model size and reduce the computational complexity.</p>
-<p><code>Depthwise separable convolution </code> is a <code>depthwise convolution</code> followed by a <code>pointwise convolution</code> as follows:</p>
+<p><code>Depthwise separable convolution</code> is a <code>depthwise convolution</code> followed by a <code>pointwise convolution</code> as follows:</p>
 <p align = "center"> 
 <img src = "image/Depthwise-separable-convolution-block.png" width = 500> </p>
 <p>A small note about the architecture here, is that after each convolution MobileNet will use Batch Normalization (BN) and ReLU as shown below:
@@ -121,7 +121,7 @@ Example:
 
 ```python
 
-python train.py  --train-folder ./data/train --valid-folder ./data/val --num-classes 5 --epochs 100 
+python train.py  --train-folder ./data/train --valid-folder ./data/val --classes 5 --epochs 100 
 
 ``` 
 
