@@ -1,5 +1,5 @@
 # MobilenetV1
-My project is using the TensorFlow framework to implement the [MobilenetV1 model](https://arxiv.org/abs/1704.04861) to classify flower photos. Give me a star if you like this repo.
+My project is using the TensorFlow framework to implement the [MobilenetV1 model](https://arxiv.org/abs/1704.04861) to classify Flower Images. Give me a star if you like this repo.
 
 ### Model Architecture
 The MobileNet network architecture is shown below. The image below is excerpted from the author's original article
