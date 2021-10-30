@@ -3,7 +3,6 @@ from tensorflow.keras import *
 
 class Mobilenet_V1():
     def __init__(self,*, classes, alpha = 1.0, rho = 1.0, droppout = 0.001, img_size = (224,224)):
-        super(Mobilenet_V1, self).__init__()
         assert alpha > 0 and alpha <= 1 ,'Error, my Mobilenet_V1 can only accept  alpha > 0 and alpha <= 1'
         assert rho > 0 and rho <= 1 ,'Error, my Mobilenet_V1 can only accept  rho > 0 and rho <= 1'
         self._alpha = alpha
@@ -12,7 +11,8 @@ class Mobilenet_V1():
         self.model = None 
         self._droppout = droppout
         self.img_size = img_size
-
+    def _correct_padding(self, inp_shape):
+        return int((((inp_shape[1] - 1) * 2 + 3 ) - inp_shape[1]) / 2)
     def __Standard_Conv(self):
         return models.Sequential([
             Conv2D(filters= 32, kernel_size=(3,3), strides= (2,2), padding= 'valid'),
@@ -70,7 +70,7 @@ class Mobilenet_V1():
                 self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), filters_pointwise= 512),
         # Depth_Separable_Conv 12
              self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), filters_pointwise= 1024),
-             ZeroPadding2D(padding= (4,4)),
+             ZeroPadding2D(padding= self._correct_padding),
 
         # Depth_Separable_Conv 13
             self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), filters_pointwise= 1024),
