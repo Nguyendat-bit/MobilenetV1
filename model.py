@@ -11,8 +11,6 @@ class Mobilenet_V1():
         self.model = None 
         self._droppout = droppout
         self.img_size = img_size
-    def _correct_padding(self, inp_shape):
-        return int((((inp_shape[1] - 1) * 2 + 3 ) - inp_shape[1]) / 2)
     def __Standard_Conv(self):
         return models.Sequential([
             Conv2D(filters= 32, kernel_size=(3,3), strides= (2,2), padding= 'valid'),
@@ -20,9 +18,9 @@ class Mobilenet_V1():
             Activation('relu')
         ])
     
-    def __Depthwise_Conv(self, strides):
+    def __Depthwise_Conv(self, strides, padding):
         return models.Sequential([
-            DepthwiseConv2D(kernel_size= (3,3), strides= strides, padding= 'same' if  strides == (1,1) else 'valid'),
+            DepthwiseConv2D(kernel_size= (3,3), strides= strides, padding= padding),
             BatchNormalization(),
             Activation('relu')
         ])
@@ -35,9 +33,9 @@ class Mobilenet_V1():
             
         ])
 
-    def __Depthwise_Separable_Conv( self,*, strides_depthwise, filters_pointwise):
+    def __Depthwise_Separable_Conv( self,*, strides_depthwise, padding_depthwise, filters_pointwise):
         return models.Sequential([
-            self.__Depthwise_Conv(strides= strides_depthwise),
+            self.__Depthwise_Conv(strides= strides_depthwise, padding= padding_depthwise),
             self.__Pointwise_Conv(filters= filters_pointwise)
         ])
 
@@ -51,29 +49,28 @@ class Mobilenet_V1():
             self.__Standard_Conv(),
 
         # Depth_Separable_Conv 1
-            self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), filters_pointwise= 64),
+            self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), padding_depthwise= 'same',filters_pointwise= 64),
         # Depth_Separable_Conv 2
-            self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), filters_pointwise= 128),
+            self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), padding_depthwise= 'valid', filters_pointwise= 128),
         # Depth_Separable_Conv 3
-            self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), filters_pointwise= 128),
+            self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), padding_depthwise= 'same', filters_pointwise= 128),
         # Depth_Separable_Conv 4
-            self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), filters_pointwise= 256),
+            self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), padding_depthwise= 'valid', filters_pointwise= 256),
         # Depth_Separable_Conv 5
-            self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), filters_pointwise= 256),
+            self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), padding_depthwise= 'same', filters_pointwise= 256),
         # Depth_Separable_Conv 6
-            self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), filters_pointwise= 512),
+            self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), padding_depthwise= 'valid', filters_pointwise= 512),
         # Depth_Separable_Conv 7 - > 11
-                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), filters_pointwise= 512),
-                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), filters_pointwise= 512),
-                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), filters_pointwise= 512),
-                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), filters_pointwise= 512),
-                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), filters_pointwise= 512),
+                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), padding_depthwise= 'same', filters_pointwise= 512),
+                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), padding_depthwise= 'same', filters_pointwise= 512),
+                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), padding_depthwise= 'same', filters_pointwise= 512),
+                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), padding_depthwise= 'same', filters_pointwise= 512),
+                self.__Depthwise_Separable_Conv(strides_depthwise= (1,1), padding_depthwise= 'same', filters_pointwise= 512),
         # Depth_Separable_Conv 12
-             self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), filters_pointwise= 1024),
-             ZeroPadding2D(padding= self._correct_padding),
+             self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), padding_depthwise= 'valid', filters_pointwise= 1024),
 
         # Depth_Separable_Conv 13
-            self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), filters_pointwise= 1024),
+            self.__Depthwise_Separable_Conv(strides_depthwise= (2,2), padding_depthwise= 'same', filters_pointwise= 1024),
             GlobalAveragePooling2D(),
     
         # FC
