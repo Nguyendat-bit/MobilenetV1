@@ -15,21 +15,21 @@ class Mobilenet_V1():
         return models.Sequential([
             Conv2D(filters= 32, kernel_size=(3,3), strides= (2,2), padding= 'valid'),
             BatchNormalization(),
-            Activation('relu')
+            ReLU(max_value= 6)
         ])
     
     def __Depthwise_Conv(self, strides, padding):
         return models.Sequential([
             DepthwiseConv2D(kernel_size= (3,3), strides= strides, padding= padding),
             BatchNormalization(),
-            Activation('relu')
+            ReLU(max_value= 6)
         ])
     
     def __Pointwise_Conv(self, filters):
         return models.Sequential([
             Conv2D(filters= int(filters * self._alpha), kernel_size= (1,1), strides= 1),
             BatchNormalization(),
-            Activation('relu')
+            ReLU(max_value= 6)
             
         ])
 
